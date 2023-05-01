@@ -15,7 +15,7 @@ def get_post(place_id):
         abort(404)
 
     if request.method == 'GET':
-        return jsonify([review.to_dict for review in place.reviews])
+        return jsonify([review.to_dict() for review in place.reviews])
 
     if request.method == 'POST':
         if not request.get_json():
@@ -28,7 +28,8 @@ def get_post(place_id):
             abort(404)
         json_data = request.get_json()
         review = Review(user_id=json_data['user_id'], text=json_data['text'])
-        text.save()
+        review.place_id = place_id
+        review.save()
         return make_response(jsonify(review.to_dict()), 201)
 
 
