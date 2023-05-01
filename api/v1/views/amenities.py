@@ -5,14 +5,18 @@ from flask import abort, request, jsonify, make_response
 from models import storage
 from models.amenity import Amenity
 
-@app_views.route('/api/v1/amenities', strict_slashes=False, methods=['GET'])
+
+@app_views.route('/amenities', strict_slashes=False, methods=['GET'])
 def amenities():
+    """returns a list of all amenity objects"""
     amenities = storage.all(Amenity)
     return jsonify([amenity.to_dict() for amenity in amenities.values()])
 
 
-@app_views.route('/api/v1/amenities/<amenity_id>', strict_slashes=False, methods=['GET', 'DELETE', 'PUT'])
+@app_views.route('/amenities/<amenity_id>', strict_slashes=False,
+                 methods=['GET', 'DELETE', 'PUT'])
 def amenity_id(amenity_id):
+    """returns the result of an http request depending on the method used"""
     amenity = storage.get(Amenity, amenity_id)
     if not amenity:
         abort(404)
@@ -34,8 +38,9 @@ def amenity_id(amenity_id):
         return make_response(jsonify(amenity.to_dict()), 200)
 
 
-@app_views.route('/api/v1/amenities', strict_slashes=False, methods=['POST'])
+@app_views.route('/amenities', strict_slashes=False, methods=['POST'])
 def post_amenity():
+    """creates an amenity using a given name in the post header"""
     if not request.get_json():
         abort(400, 'Not a JSON')
     if 'name' not in request.get_json():
