@@ -2,6 +2,7 @@
 """ holds class Amenity"""
 import models
 from models.base_model import BaseModel, Base
+from models.place import place_amenity
 from os import getenv
 import sqlalchemy
 from sqlalchemy import Column, String
