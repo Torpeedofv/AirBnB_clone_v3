@@ -6,6 +6,7 @@ from models import storage
 from models.amenity import Amenity
 from models.user import User
 
+
 @app_views.route('/users', strict_slashes=False, methods=['GET', 'POST'])
 def post_get():
     users = storage.all(User)
@@ -14,9 +15,9 @@ def post_get():
     if request.method == 'POST':
         if not request.get_json():
             abort(400, 'Not a JSON')
-        if 'email' not in request.get_json:
+        if 'email' not in request.get_json():
             abort(400, 'Missing email')
-        if 'password' not in request.get_json:
+        if 'password' not in request.get_json():
             abort(400, 'Missing password')
         json_data = request.get_json()
         user = User(password=json_data['password'], email=json_data['email'])
@@ -37,7 +38,7 @@ def methods(user_id):
     if request.method == 'DELETE':
         storage.delete(user)
         storage.save()
-        return jsonify({}), 200
+        return make_response(jsonify({}), 200)
 
     if request.method == 'PUT':
         if not request.get_json():
