@@ -46,12 +46,11 @@ class DBStorage:
         key = cls.__name__ + '.' + id
         if key in self.all(cls):
             obj = self.all(cls)[key]
-        return obj 
-
+        return obj
 
     def count(self, cls=None):
         """counts the number of objects in storage"""
-        return len(self.all(cls)) 
+        return len(self.all(cls))
 
     def all(self, cls=None):
         """query on the current database session"""
