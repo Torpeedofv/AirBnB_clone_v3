@@ -8,6 +8,7 @@ from models.state import State
 
 @app_views.route('/states', strict_slashes=False, methods=['GET'])
 def all_states():
+    """returns a list of all the state objects"""
     return jsonify([state.to_dict()
                    for state in storage.all(State).values()])
 
