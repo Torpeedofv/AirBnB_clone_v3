@@ -20,7 +20,8 @@ def post_get():
         if 'password' not in request.get_json():
             abort(400, 'Missing password')
         json_data = request.get_json()
-        user = User(password=json_data['password'], email=json_data['email']) 
+        user = User(password=json_data['password'], email=json_data['email'])
+        storage.new(user)
         user.save()
         return make_response(jsonify(user.to_dict()), 201)
 
